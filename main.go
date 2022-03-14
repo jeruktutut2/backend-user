@@ -10,6 +10,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/jeruktutut2/backend-user/controller"
+	"github.com/jeruktutut2/backend-user/route"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -17,6 +19,9 @@ func main() {
 	fmt.Println("tes")
 
 	router := httprouter.New()
+
+	userController := controller.NewUserController()
+	route.UserRoute(router, userController)
 
 	server := &http.Server{
 		Addr:    ":10001",
