@@ -12,11 +12,13 @@ import (
 
 	"github.com/jeruktutut2/backend-user/controller"
 	"github.com/jeruktutut2/backend-user/route"
+	"github.com/jeruktutut2/backend-user/util"
 	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
-	fmt.Println("tes")
+	databaseConnection := util.NewDatabaseConnection()
+	fmt.Println("databaseConnection:", databaseConnection)
 
 	router := httprouter.New()
 
@@ -39,6 +41,8 @@ func main() {
 	log.Println("Server Started")
 
 	<-done
+
+	util.Close(databaseConnection)
 	log.Println("Server Stopped")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

@@ -26,6 +26,13 @@ func MultipleMiddleware(h httprouter.Handle, middlewares ...Middleware) httprout
 func Middleware1(next httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		fmt.Println("Middleware1")
+		// c := 1
+		// if c == 1 {
+		// 	fmt.Fprint(w, "Middleware1 c 1")
+		// } else {
+		// 	next(w, r, params)
+		// }
+
 		next(w, r, params)
 	}
 }
@@ -33,6 +40,12 @@ func Middleware1(next httprouter.Handle) httprouter.Handle {
 func Middleware2(next httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		fmt.Println("Middleware2")
+		// c := 1
+		// if c == 1 {
+		// 	fmt.Fprint(w, "Middleware2 c")
+		// } else {
+		// 	next(w, r, params)
+		// }
 		next(w, r, params)
 	}
 }
