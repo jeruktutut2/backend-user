@@ -11,7 +11,9 @@ import (
 	"time"
 
 	"github.com/jeruktutut2/backend-user/controller"
+	"github.com/jeruktutut2/backend-user/repository"
 	"github.com/jeruktutut2/backend-user/route"
+	"github.com/jeruktutut2/backend-user/service"
 	"github.com/jeruktutut2/backend-user/util"
 	"github.com/julienschmidt/httprouter"
 )
@@ -22,7 +24,9 @@ func main() {
 
 	router := httprouter.New()
 
-	userController := controller.NewUserController()
+	userRepository := repository.NewUserRepository()
+	userService := service.NewUserService(databaseConnection, userRepository)
+	userController := controller.NewUserController(userService)
 	route.UserRoute(router, userController)
 
 	server := &http.Server{
