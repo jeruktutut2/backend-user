@@ -8,7 +8,7 @@ import (
 )
 
 func NewDatabaseConnection() *sql.DB {
-	db, err := sql.Open("mysql", "admin2:12345@tcp(localhost:3306)/golang_example?parseTime=true")
+	db, err := sql.Open("mysql", "admin2:12345@tcp(localhost:3306)/backend_user?parseTime=true")
 	if err != nil {
 		panic(err)
 	}

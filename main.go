@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +9,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/jeruktutut2/backend-user/controller"
+	"github.com/jeruktutut2/backend-user/exception"
 	"github.com/jeruktutut2/backend-user/repository"
 	"github.com/jeruktutut2/backend-user/route"
 	"github.com/jeruktutut2/backend-user/service"
@@ -20,12 +21,13 @@ import (
 
 func main() {
 	databaseConnection := util.NewDatabaseConnection()
-	fmt.Println("databaseConnection:", databaseConnection)
-
+	// fmt.Println("databaseConnection:", databaseConnection)
+	validator := validator.New()
 	router := httprouter.New()
+	router.PanicHandler = exception.ErrorHandler
 
 	userRepository := repository.NewUserRepository()
-	userService := service.NewUserService(databaseConnection, userRepository)
+	userService := service.NewUserService(databaseConnection, validator, userRepository)
 	userController := controller.NewUserController(userService)
 	route.UserRoute(router, userController)
 

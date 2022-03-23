@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/jeruktutut2/backend-user/model/request"
+	"github.com/jeruktutut2/backend-user/model/response"
 	"github.com/jeruktutut2/backend-user/service"
 	"github.com/julienschmidt/httprouter"
 )
@@ -25,16 +27,14 @@ func NewUserController(userService service.UserService) UserController {
 }
 
 func (controller *UserControllerImplementation) Login(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
 	defer func() {
-		if ctx.Err() != context.Canceled {
-			fmt.Println("ctx.Err():", ctx.Err())
-		}
+		response.ResponseHttpContext(w, ctx.Err())
 		cancel()
 	}()
-	// fmt.Println("ctx:", ctx)
-	// time.Sleep(10 * time.Second)
-
-	controller.UserService.Login(ctx, "usrname", "password")
-	fmt.Fprint(w, "keren")
+	userLoginRequest := request.UserLoginRequest{}
+	request.ReadFromRequestBody(r, &userLoginRequest)
+	fmt.Println("userLoginRequest:", userLoginRequest)
+	userLoginResponse := controller.UserService.Login(ctx, userLoginRequest)
+	response.ResponseHttp(w, http.StatusOK, userLoginResponse, nil)
 }
