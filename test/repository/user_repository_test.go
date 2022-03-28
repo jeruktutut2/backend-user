@@ -32,6 +32,7 @@ func TestGetUserByUsername(t *testing.T) {
 	}
 	userRepository := repository.NewUserRepository()
 	user := userRepository.GetUserByUsername(tx, ctx, username)
+	tx.Commit()
 	assert.Equal(t, user.Id, "id")
 	assert.Equal(t, user.Username, username)
 }
