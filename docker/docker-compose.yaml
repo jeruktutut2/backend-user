@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db_master:
+    image: mysql:8.0.28-oracle
+    container_name: "backend_user_master"
+    restart: always
+    environment:
+      MYSQL_DATABASE: "backend_user_master"
+      MYSQL_USER: "admin2"
+      MYSQL_PASSWORD: "12345"
+      MYSQL_ROOT_PASSWORD: "root12345"
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/leju/Documents/docker/mysql_backend_user_master:/var/lib/mysql
+  db_slave:
+    image: mysql:8.0.28-oracle
+    container_name: "backend_user_slave"
+    restart: always
+    environment:
+      MYSQL_DATABASE: "backend_user_slave"
+      MYSQL_USER: "admin2"
+      MYSQL_PASSWORD: "12345"
+      MYSQL_ROOT_PASSWORD: "root12345"
+    ports:
+      - "3307:3306"
+    volumes:
+      - /home/leju/Documents/docker/mysql_backend_user_slave:/var/lib/mysql

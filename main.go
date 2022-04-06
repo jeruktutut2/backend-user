@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/jeruktutut2/backend-user/configuration"
 	"github.com/jeruktutut2/backend-user/controller"
 	"github.com/jeruktutut2/backend-user/exception"
 	"github.com/jeruktutut2/backend-user/repository"
@@ -20,7 +21,10 @@ import (
 )
 
 func main() {
-	databaseConnection := util.NewDatabaseConnection()
+	configuration := configuration.NewConfiguration()
+	// fmt.Println("configuration:", configuration)
+	util.SetTimezone(configuration.Timezone.Timezone)
+	databaseConnection := util.NewDatabaseConnection(configuration.Database)
 	// fmt.Println("databaseConnection:", databaseConnection)
 	validator := validator.New()
 	router := httprouter.New()

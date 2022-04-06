@@ -2,13 +2,15 @@ package util
 
 import (
 	"database/sql"
+	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jeruktutut2/backend-user/configuration"
 )
 
-func NewDatabaseConnection() *sql.DB {
-	db, err := sql.Open("mysql", "admin2:12345@tcp(localhost:3306)/backend_user?parseTime=true")
+func NewDatabaseConnection(databaseConfiguration configuration.Database) *sql.DB {
+	db, err := sql.Open("mysql", databaseConfiguration.Username+":"+databaseConfiguration.Password+"@tcp("+databaseConfiguration.Host+":"+strconv.Itoa(databaseConfiguration.Port)+")/"+databaseConfiguration.Database+"?parseTime=true")
 	if err != nil {
 		panic(err)
 	}

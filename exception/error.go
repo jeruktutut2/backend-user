@@ -21,7 +21,11 @@ func NewErrorMessage(code int, errors interface{}) (errorMessage ErrorMessage) {
 
 func PanicIfError(err error) {
 	if err != nil {
-		panic(err)
+		out, err := json.Marshal(NewErrorMessage(500, err.Error()))
+		if err != nil {
+			panic(err)
+		}
+		panic(string(out))
 	}
 }
 

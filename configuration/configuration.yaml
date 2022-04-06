@@ -1,0 +1,8 @@
+database:
+  host: localhost
+  username: admin2
+  password: 12345
+  database: backend_user_master
+  port: 3306
+timezone:
+  timezone: Asia/Makassar # Asia/Jakarta, Asia/Makassar, Asia/Jayapura
